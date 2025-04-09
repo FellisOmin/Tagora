@@ -1,0 +1,98 @@
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+	padding: 1em;
+}
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+input {
+	outline: none;
+	background: rgba(243, 244, 246, 1);
+	padding: 12px;
+	color: rgba(74, 85, 101, 1);
+	border-radius: 12px;
+	border: none;
+	width: 100%;
+}
+span {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 8px;
+	border-radius: 8px;
+}
+.spans {
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+	padding: 0 12px;
+}
+#game {
+	background: rgba(219, 234, 254, 1);
+	color: rgba(20, 71, 230, 1);
+}
+#music {
+	color: #432dd7;
+	background: #e0e7ff;
+}
+#learn {
+	color: #8200da;
+	background: #f3e8ff;
+}
+#inspo {
+	color: #c6005b;
+	background: #fde7f3;
+}
+#dev {
+	color: #c10008;
+	background: #ffe2e1;
+}
+#web {
+	color: #884b00;
+	background: #fef9c2;
+}
+#design {
+	color: #008236;
+	background: #dcfce7;
+}
+.tagora {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	margin-top: 1em;
+	margin-bottom: 3em;
+}
+.title {
+	text-align: center;
+	font-size: 12px;
+	color: rgba(0, 0, 0, 0.5);
+	text-transform: capitalize;
+}
+h2 {
+	text-align: center;
+	text-transform: capitalize;
+}
+.fav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 4.5em;
+	height: 4.5em;
+	background: gray;
+	border-radius: 24px;
+}
+.site {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
