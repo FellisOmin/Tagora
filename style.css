@@ -22,19 +22,33 @@ input {
 	border-radius: 12px;
 	border: none;
 	width: 100%;
+	transition: padding-bottom 0.3s ease;
+	overflow: hidden;
+}
+input:focus,
+input:active {
+	padding-bottom: 112px;
 }
 span {
 	font-size: 14px;
 	font-weight: bold;
 	padding: 8px;
 	border-radius: 8px;
+	cursor: pointer;
+	transition: color 0.3s ease, background 0.3s ease;
 }
 .spans {
 	display: flex;
 	gap: 12px;
 	flex-wrap: wrap;
 	padding: 0 12px;
+	position: absolute;
+	bottom: 12px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
 }
+
 #game {
 	background: rgba(219, 234, 254, 1);
 	color: rgba(20, 71, 230, 1);
@@ -69,6 +83,8 @@ span {
 	gap: 1em;
 	margin-top: 1em;
 	margin-bottom: 3em;
+	position: relative;
+	height: 140px;
 }
 .title {
 	text-align: center;
