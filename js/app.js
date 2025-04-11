@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			tag.style.background = originalColor
 			tag.style.color = originalBackground
+
 			// Получаем значение из поля ввода и удаляем лишние пробелы
 			const url = input.value.trim()
 
@@ -36,38 +37,40 @@ document.addEventListener('DOMContentLoaded', () => {
 				// Создаем новый элемент для сайта
 				const siteDiv = document.createElement('a')
 				if (url === 'https://') {
-					siteDiv.setAttribute('href', url) // Устанавливаем значение поля ввода в атрибут href
+					siteDiv.setAttribute('href', url)
 				} else {
-					siteDiv.setAttribute('href', 'https://' + url) // Добавляем протокол к URL
+					siteDiv.setAttribute('href', 'https://' + url)
 				}
 
-				siteDiv.classList.add('site') // Добавляем класс "site"
-				siteDiv.setAttribute('data-tag', tag.dataset.tag) // Привязываем тег к сайту
+				siteDiv.classList.add('site')
+				if (tag.dataset.tag === 'all') return
 
-				// Заполняем HTML содержимое нового элемента
+				siteDiv.setAttribute('data-tag', tag.dataset.tag)
+
+				// Вставляем HTML
 				siteDiv.innerHTML = `
-                    <div class="fav"><h2>${firstLetter}</h2></div>
-                    <p class="title">${title}</p>
-										
-                `
+					<div class="fav"><h2>${firstLetter}</h2></div>
+					<p class="title">${title}</p>
+				`
 
-				// Добавляем новый элемент в контейнер
+				// Красим блок .fav в цвета тега
+				const fav = siteDiv.querySelector('.fav')
+				fav.style.background = originalBackground
+				fav.style.color = originalColor
+
+				// Добавляем на страницу
 				grid.appendChild(siteDiv)
-				// Очищаем поле ввода
 				input.value = ''
 			} else {
-				// 🔍 СОРТИРОВКА сайтов по тегу
-				input.classList.remove('addMode')
-				const selectedTag = tag.dataset.tag // Получаем выбранный тег
+				// 🔍 СОРТИРОВКА
+				const selectedTag = tag.dataset.tag
+				const sites = document.querySelectorAll('.site')
 
-				const sites = document.querySelectorAll('.site') // Все элементы с классом "site"
-
-				// Перебираем все сайты и показываем/скрываем их в зависимости от тега
 				sites.forEach(site => {
-					if (site.dataset.tag === selectedTag) {
-						site.style.display = 'block' // Показываем сайт
+					if (selectedTag === 'all' || site.dataset.tag === selectedTag) {
+						site.style.display = 'flex'
 					} else {
-						site.style.display = 'none' // Скрываем сайт
+						site.style.display = 'none'
 					}
 				})
 			}
