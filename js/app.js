@@ -61,6 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
 				// Добавляем на страницу
 				grid.appendChild(siteDiv)
 				input.value = ''
+				// После добавления — сбрасываем стили всех тегов
+				tags.forEach(t => {
+					t.style.background = ''
+					t.style.color = ''
+				})
+				const allTag = document.querySelector('[data-tag="all"]')
+				if (allTag) {
+					allTag.click()
+				}
 			} else {
 				// 🔍 СОРТИРОВКА
 				const selectedTag = tag.dataset.tag
@@ -76,4 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		})
 	})
+	// При фокусе или вводе в поле — сбрасываем стили у всех тегов
+	input.addEventListener('focus', resetTagStyles)
+	input.addEventListener('input', resetTagStyles)
+
+	function resetTagStyles() {
+		tags.forEach(tag => {
+			tag.style.background = ''
+			tag.style.color = ''
+		})
+	}
 })

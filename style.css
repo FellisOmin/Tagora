@@ -6,6 +6,22 @@
 	padding: 0;
 }
 
+@keyframes shake {
+	0% {
+		transform: rotate(-0.5deg);
+	}
+	100% {
+		transform: rotate(0.5deg);
+	}
+}
+
+.deletable {
+	animation: shake 85ms infinite alternate ease-in-out;
+	transform-origin: center;
+	background: rgba(255, 0, 0, 0.16);
+	color: red;
+}
+
 body {
 	font-family: 'Inter', sans-serif;
 	padding: 1em;
@@ -97,6 +113,7 @@ header {
 	color: #008236;
 	background: #dcfce7;
 }
+
 .tagora {
 	display: flex;
 	flex-direction: column;
