@@ -14,12 +14,20 @@
 		transform: rotate(0.5deg);
 	}
 }
-
+svg path {
+	transition: fill 0.3s ease;
+}
+.active {
+	opacity: 1;
+}
+.active svg path {
+	fill: rgb(241, 95, 95);
+}
 .deletable {
 	animation: shake 85ms infinite alternate ease-in-out;
 	transform-origin: center;
-	background: rgba(255, 0, 0, 0.16);
-	color: red;
+	background: rgba(255, 0, 0, 0.16) !important;
+	color: red !important;
 }
 
 body {

@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const input = document.getElementById('input')
 	const grid = document.querySelector('.grid')
 	const tags = document.querySelectorAll('.spans span')
+	const deleteButton = document.getElementById('delete')
+	let deleteMode = false // Переменная для отслеживания режима удаления
 
 	// Для каждого тега добавляем обработчик клика
 	tags.forEach(tag => {
@@ -66,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					t.style.background = ''
 					t.style.color = ''
 				})
+
 				const allTag = document.querySelector('[data-tag="all"]')
 				if (allTag) {
 					allTag.click()
@@ -85,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		})
 	})
+
 	// При фокусе или вводе в поле — сбрасываем стили у всех тегов
 	input.addEventListener('focus', resetTagStyles)
 	input.addEventListener('input', resetTagStyles)
@@ -95,4 +99,17 @@ document.addEventListener('DOMContentLoaded', () => {
 			tag.style.color = ''
 		})
 	}
+	deleteButton.addEventListener('click', () => {
+		deleteMode = !deleteMode
+		const favs = grid.querySelectorAll('.site .fav')
+		const sites = document.querySelectorAll('.site')
+
+		if (deleteMode) {
+			deleteButton.classList.add('active')
+			favs.forEach(fav => fav.classList.add('deletable'))
+		} else {
+			deleteButton.classList.remove('active')
+			favs.forEach(fav => fav.classList.remove('deletable'))
+		}
+	})
 })
