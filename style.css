@@ -8,10 +8,10 @@
 
 @keyframes shake {
 	0% {
-		transform: rotate(-0.5deg);
+		transform: rotate(-2.5deg);
 	}
 	100% {
-		transform: rotate(0.5deg);
+		transform: rotate(2.5deg);
 	}
 }
 svg path {
@@ -152,6 +152,7 @@ a {
 	height: 4.5em;
 	background: gray;
 	border-radius: 24px;
+	transition: background 0.3s ease, color 0.3s ease;
 }
 .site {
 	display: flex;

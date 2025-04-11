@@ -29,14 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (url !== '') {
 				// ➕ ДОБАВЛЕНИЕ нового сайта
 
-				// Убираем протокол (http/https) и завершающий слэш из URL
 				const cleanUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '')
-				// Извлекаем название сайта (до первой точки)
 				const title = cleanUrl.split('.')[0]
-				// Берем первую букву названия сайта и делаем её заглавной
 				const firstLetter = title.charAt(0).toUpperCase()
 
-				// Создаем новый элемент для сайта
 				const siteDiv = document.createElement('a')
 				if (url === 'https://') {
 					siteDiv.setAttribute('href', url)
@@ -49,21 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				siteDiv.setAttribute('data-tag', tag.dataset.tag)
 
-				// Вставляем HTML
 				siteDiv.innerHTML = `
 					<div class="fav"><h2>${firstLetter}</h2></div>
 					<p class="title">${title}</p>
 				`
 
-				// Красим блок .fav в цвета тега
 				const fav = siteDiv.querySelector('.fav')
 				fav.style.background = originalBackground
 				fav.style.color = originalColor
 
-				// Добавляем на страницу
 				grid.appendChild(siteDiv)
 				input.value = ''
-				// После добавления — сбрасываем стили всех тегов
+
 				tags.forEach(t => {
 					t.style.background = ''
 					t.style.color = ''
@@ -73,6 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (allTag) {
 					allTag.click()
 				}
+
+				updateDeleteButtonState()
 			} else {
 				// 🔍 СОРТИРОВКА
 				const selectedTag = tag.dataset.tag
@@ -90,19 +85,37 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 
 	// При фокусе или вводе в поле — сбрасываем стили у всех тегов
-	input.addEventListener('focus', resetTagStyles)
-	input.addEventListener('input', resetTagStyles)
+	input.addEventListener('focus', handleInputActivity)
+	input.addEventListener('input', handleInputActivity)
+	input.addEventListener('blur', () => {
+		updateDeleteButtonState() // Проверяем наличие сайтов
+	})
 
-	function resetTagStyles() {
+	function handleInputActivity() {
 		tags.forEach(tag => {
 			tag.style.background = ''
 			tag.style.color = ''
 		})
+
+		// Выключаем режим удаления при вводе
+		deleteMode = false
+		deleteButton.classList.remove('active')
+		deleteButton.disabled = true
+
+		const favs = grid.querySelectorAll('.site .fav')
+		favs.forEach(fav => fav.classList.remove('deletable'))
 	}
+
+	// Обновляем доступность кнопки удаления в зависимости от наличия сайтов
+	function updateDeleteButtonState() {
+		const hasSites = grid.querySelectorAll('.site').length > 0
+		deleteButton.disabled = !hasSites
+	}
+
+	// Переключение режима удаления
 	deleteButton.addEventListener('click', () => {
 		deleteMode = !deleteMode
 		const favs = grid.querySelectorAll('.site .fav')
-		const sites = document.querySelectorAll('.site')
 
 		if (deleteMode) {
 			deleteButton.classList.add('active')
@@ -112,4 +125,31 @@ document.addEventListener('DOMContentLoaded', () => {
 			favs.forEach(fav => fav.classList.remove('deletable'))
 		}
 	})
+
+	// Удаление закладок по клику в режиме удаления
+	grid.addEventListener('click', event => {
+		if (deleteMode) {
+			const siteLink = event.target.closest('.site')
+			if (siteLink) {
+				event.preventDefault() // 🔒 Отключаем переход по ссылке
+				siteLink.remove()
+
+				// Обновляем состояние кнопки удаления
+				updateDeleteButtonState()
+
+				// Если не осталось сайтов — отключаем режим удаления
+				if (grid.querySelectorAll('.site').length === 0) {
+					deleteMode = false
+					deleteButton.classList.remove('active')
+					deleteButton.disabled = true
+
+					const favs = grid.querySelectorAll('.site .fav')
+					favs.forEach(fav => fav.classList.remove('deletable'))
+				}
+			}
+		}
+	})
+
+	// Проверка при загрузке страницы
+	updateDeleteButtonState()
 })
